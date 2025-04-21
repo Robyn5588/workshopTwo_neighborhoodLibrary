@@ -1,8 +1,6 @@
 package com.ps;
 
-import java.util.Objects;
 import java.util.Scanner;
-
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -124,7 +122,7 @@ public class Main {
         }
     }
 
-    public static void checkOutBook (){
+    public static void checkOutBook(){
         System.out.println("\nChecked out Books:");
 
         for(Book book:library){
@@ -167,6 +165,8 @@ public class Main {
                 homeScreen();
                 break;
             default:
+                System.out.println("Option not Available. Try Again");
+                checkOutBook();
         }
     }
 
@@ -179,7 +179,6 @@ public class Main {
         }else{
             System.out.println("You did not Borrow This Book");
         }
-
     }
 
 }
