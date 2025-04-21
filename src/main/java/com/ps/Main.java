@@ -1,25 +1,16 @@
 package com.ps;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-    public static String [] inventory = {"Moby Dick", "Tale of Two Cities","Pride and Prejudice","Crime and Punishment","Othello","The House on Mango Street",
-            "Hunger Games","A Clockwork Orange","The Odyssey","The Shinning", "Fight Club","The Count of Monte Cristo", "Frankenstein","One Hundred Years of Solitude",
-    "Dracula","The Alchemist","Perfume: The Story of a Murder","Milkweed","The Outsiders","1894"};
     public static Book[] library = library();
 
     public static void main(String[] args) {
 
         homeScreen();
-
-//        for(Book book:library){
-//            System.out.println(book.getId());
-//            System.out.println(book.getIsbn());
-//            System.out.println(book.getTitle());
-//        }
-
 
     }
 
@@ -27,26 +18,26 @@ public class Main {
 
         Book[] book = new Book[20];
 
-        book[0] = new Book(1,"9780393285000",inventory[0],false,"");
-        book[1]  = new Book(2,"9780451530578",inventory[1],false,"");
-        book[2]  = new Book(3,"9780451530783",inventory[2],false,"");
-        book[3]  = new Book(4,"9780177456637",inventory[3],false,"");
-        book[4]  = new Book(5,"9784594550431",inventory[4],false,"");
-        book[5]  = new Book(6,"9781574057104",inventory[5],false,"");
-        book[6]  = new Book(7,"9783508532454",inventory[6],false,"");
-        book[7]  = new Book(8,"9784957391495",inventory[7],false,"");
-        book[8]  = new Book(9,"9785430543145",inventory[8],false,"");
-        book[9]  = new Book(10,"97849205940285",inventory[9],false,"");
-        book[10]  = new Book(11,"97845739548754",inventory[10],false,"");
-        book[11]  = new Book(12,"97859075984375",inventory[11],false,"");
-        book[12]  = new Book(13,"97834584504883",inventory[12],false,"");
-        book[13]  = new Book(14,"97802574593035",inventory[13],false,"");
-        book[14]  = new Book(15,"97823450243544",inventory[14],false,"");
-        book[15]  = new Book(16,"97824505405752",inventory[15],false,"");
-        book[16]  = new Book(17,"97823432504098",inventory[16],false,"");
-        book[17]  = new Book(18,"97804540520457",inventory[17],false,"");
-        book[18]  = new Book(19,"97862405434500",inventory[18],false,"");
-        book[19]  = new Book(20,"97820572034502",inventory[19],false,"");
+        book[0] = new Book(1,"9780393285000","Moby Dick",false,"");
+        book[1]  = new Book(2,"9780451530578","Tale of Two Cities",false,"");
+        book[2]  = new Book(3,"9780451530783","Pride and Prejudice",false,"");
+        book[3]  = new Book(4,"9780177456637","Crime and Punishment",false,"");
+        book[4]  = new Book(5,"9784594550431","Othello",false,"");
+        book[5]  = new Book(6,"9781574057104","The House on Mango Street",false,"");
+        book[6]  = new Book(7,"9783508532454","Hunger Games",false,"");
+        book[7]  = new Book(8,"9784957391495","A Clockwork Orange",false,"");
+        book[8]  = new Book(9,"9785430543145","The Odyssey",false,"");
+        book[9]  = new Book(10,"97849205940285","The Shinning",false,"");
+        book[10]  = new Book(11,"97845739548754","Fight Club",false,"");
+        book[11]  = new Book(12,"97859075984375","The Count of Monte Cristo",false,"");
+        book[12]  = new Book(13,"97834584504883","Frankenstein",false,"");
+        book[13]  = new Book(14,"97802574593035","One Hundred Years of Solitude",false,"");
+        book[14]  = new Book(15,"97823450243544","Dracula",false,"");
+        book[15]  = new Book(16,"97824505405752","The Alchemist",false,"");
+        book[16]  = new Book(17,"97823432504098","Perfume: The Story of a Murder",false,"");
+        book[17]  = new Book(18,"97804540520457","Milkweed",false,"");
+        book[18]  = new Book(19,"97862405434500","The Outsiders",false,"");
+        book[19]  = new Book(20,"97820572034502","1894",false,"");
 
         return book;
     }
@@ -77,7 +68,7 @@ public class Main {
     }
 
     public static void availableBooks(){
-        System.out.println("\nAvailable books:");
+        System.out.println("\nAvailable Books:");
 
         for(Book book:library){
             if(book.isCheckOut() != true){
@@ -111,13 +102,13 @@ public class Main {
                     scanner.nextLine();
 
                     System.out.print("Enter Your Name: ");
-                    String name = scanner.nextLine();
+                    String nameOut = scanner.nextLine();
 
                     for(int item:takeOut){
                         if (library[item-1].isCheckOut() == true){
                             System.out.println("Book "+item+" is not Available");
                         }else {
-                            library[item-1].checkout(name);
+                            library[item-1].checkout(nameOut);
                         }
                     }
                 }else{
@@ -134,6 +125,17 @@ public class Main {
     }
 
     public static void checkOutBook (){
+        System.out.println("\nChecked out Books:");
+
+        for(Book book:library){
+            if(book.isCheckOut() == true){
+                System.out.print("ID:"+book.getId()+" ");
+                System.out.print("ISBN:"+book.getIsbn()+" ");
+                System.out.print("Title:"+book.getTitle()+" ");
+                System.out.print("Checked out by:"+book.getCheckedOut()+" \n");
+            }
+        }
+        scanner.nextLine();
         System.out.println("\nC- Check in Book");
         System.out.println("X- Home Screen");
         System.out.print("Please Choose an Option: ");
@@ -141,8 +143,26 @@ public class Main {
 
         switch(checkOutOption){
             case "C":
-//                checkInBook();
+                System.out.print("How Many Books will be Checked in? ");
+                int input = scanner.nextInt();
 
+                if(input > 0 && input < 21){
+                    int[] takeIn = new int[input];
+
+                    for(int i=1; i<=input;i++){
+                        takeIn[i-1]= i;
+                    }
+                    scanner.nextLine();
+                    System.out.print("Enter Your name:");
+                    String nameIn = scanner.nextLine();
+
+                    for(int item: takeIn){
+                        checkInBook(nameIn);
+                    }
+                }else{
+                    System.out.println("Out of Range. Try Again");
+                    checkOutBook();
+                }
             case "X":
                 homeScreen();
                 break;
@@ -150,10 +170,15 @@ public class Main {
         }
     }
 
-    public static void checkInBook (Book id){
-        System.out.println("Enter Book ID: ");
-        id.setId(scanner.nextInt());
-        id.checkIn();
+    public static void checkInBook (String name){
+        System.out.print("Enter Book ID: ");
+        int id = scanner.nextInt();
+
+        if(name.equals(library[id-1].getCheckedOut())){
+            library[id-1].checkIn();
+        }else{
+            System.out.println("You did not Borrow This Book");
+        }
 
     }
 
